@@ -1,0 +1,28 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: devchef-db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: devchef
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: ./DevChef.Api/Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      ConnectionStrings__Pg: Host=postgres;Port=5432;Database=devchef;Username=postgres;Password=postgres
+    ports:
+      - "8080:8080"
+    restart: on-failure
+
+volumes:
+  pgdata:
