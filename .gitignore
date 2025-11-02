@@ -1,0 +1,23 @@
+# Build
+bin/
+obj/
+
+# IDEs
+.idea/
+.vscode/
+*.user
+*.suo
+
+# Rider / JetBrains
+.idea/
+*.iml
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# EF Core migrations (opcional)
+migrations/
