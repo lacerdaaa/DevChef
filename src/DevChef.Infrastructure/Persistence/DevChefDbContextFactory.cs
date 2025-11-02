@@ -18,7 +18,7 @@ public class DevChefDbContextFactory : IDesignTimeDbContextFactory<DevChefDbCont
         var connectionString = configuration.GetConnectionString("Pg");
 
         var optionsBuilder = new DbContextOptionsBuilder<DevChefDbContext>();
-        optionsBuilder.UseNpgsql(connectionString, npgsqlOptionsAction: null);
+        optionsBuilder.UseNpgsql(connectionString);
 
         return new DevChefDbContext(optionsBuilder.Options);
     }
