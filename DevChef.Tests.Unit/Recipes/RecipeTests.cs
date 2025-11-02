@@ -4,7 +4,7 @@ using Xunit;
 
 namespace DevChef.Tests.Unit.Recipes;
 
-public class RecipeTests
+public class RecipeTestsOk
 {
     [Fact]
     public void Should_Create_Recipe_With_Valid_Data()

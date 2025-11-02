@@ -12,17 +12,17 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-  api:
-    build:
-      context: .
-      dockerfile: ./DevChef.Api/Dockerfile
-    depends_on:
-      - postgres
-    environment:
-      ConnectionStrings__Pg: Host=postgres;Port=5432;Database=devchef;Username=postgres;Password=postgres
-    ports:
-      - "8080:8080"
-    restart: on-failure
+#  api:
+#    build:
+#      context: .
+#      dockerfile: ./src/DevChef.Api/Dockerfile
+#    depends_on:
+#      - postgres
+#    environment:
+#      ConnectionStrings__Pg: Host=postgres;Port=5432;Database=devchef;Username=postgres;Password=postgres
+#    ports:
+#      - "8080:8080"
+#    restart: on-failure
 
 volumes:
   pgdata:
