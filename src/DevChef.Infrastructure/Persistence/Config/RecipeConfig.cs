@@ -34,9 +34,29 @@ public class RecipeConfig : IEntityTypeConfiguration<Recipe>
         builder.Property(r => r.AuthorId)
             .IsRequired();
 
-        builder.Property<DateTime>("CreatedAtUtc")
+        builder.Property(r => r.CreatedAtUtc)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
-        
+
+        builder.Property(r => r.UpdatedAtUtc);
+
+        builder.Ignore(r => r.FavoritedBy);
+
+        builder.OwnsMany(r => r.Steps, s =>
+        {
+            s.ToTable("recipe_steps");
+
+            s.WithOwner().HasForeignKey("RecipeId");
+            s.Property<int>("Id");
+            s.HasKey("Id");
+
+            s.Property(x => x.Order)
+                .IsRequired();
+
+            s.Property(x => x.Instruction)
+                .IsRequired()
+                .HasMaxLength(400);
+        });
+
         builder.OwnsMany(r => r.Ingredients, i =>
         {
             i.ToTable("recipe_ingredients");
@@ -57,43 +77,8 @@ public class RecipeConfig : IEntityTypeConfiguration<Recipe>
                 .IsRequired()
                 .HasMaxLength(20);
         });
-        
-        builder.OwnsMany(r => r.Steps, s =>
-        {
-            s.ToTable("recipe_steps");
 
-            s.WithOwner().HasForeignKey("RecipeId");
-            s.Property<int>("Id");
-            s.HasKey("Id");
-
-            s.Property(x => x.Order)
-                .IsRequired();
-
-            s.Property(x => x.Instruction)
-                .IsRequired()
-                .HasMaxLength(400);
-        });
-        
-        builder.OwnsMany<Ingredient>(r => r.Ingredients, i =>
-        {
-            i.ToTable("recipe_ingredients");
-
-            i.WithOwner().HasForeignKey("RecipeId");
-            i.Property<int>("Id");
-            i.HasKey("Id");
-
-            i.Property(x => x.Name)
-                .IsRequired()
-                .HasMaxLength(100);
-
-            i.Property(x => x.Quantity)
-                .HasColumnType("numeric(10,2)")
-                .IsRequired();
-
-            i.Property(x => x.Unit)
-                .IsRequired()
-                .HasMaxLength(20);
-        });
-
+        builder.Navigation(r => r.Ingredients).UsePropertyAccessMode(PropertyAccessMode.Field);
+        builder.Navigation(r => r.Steps).UsePropertyAccessMode(PropertyAccessMode.Field);
     }
 }

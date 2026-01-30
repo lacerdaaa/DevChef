@@ -5,9 +5,9 @@ namespace DevChef.Domain.Entities;
 
 public sealed class User : Entity
 {
-    public string Name { get; private set; } = default!;
-    public string Email { get; private set; } = default!;
-    public string PasswordHash { get; private set; } = default!;
+    public string Name { get; private set; } = null!;
+    public string Email { get; private set; } = null!;
+    public string PasswordHash { get; private set; } = null!;
     public Role Role { get; private set; }
 
     private User() { }

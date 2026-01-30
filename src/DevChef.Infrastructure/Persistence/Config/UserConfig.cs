@@ -28,6 +28,8 @@ public class UserConfig : IEntityTypeConfiguration<User>
             .IsRequired();
 
         builder.Property(u => u.CreatedAtUtc)
-            .IsRequired();
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+        builder.Property(u => u.UpdatedAtUtc);
     }
 }
